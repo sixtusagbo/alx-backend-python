@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """This module contains a function that converts its arguments to a
 tuple of key-value pairs.
 """

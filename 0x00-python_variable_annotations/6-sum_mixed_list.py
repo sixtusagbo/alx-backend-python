@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """This module contains a function that sums up integers and floats"""
 from typing import List, Union
 
