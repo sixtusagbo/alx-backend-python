@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Coroutine that yields random numbers"""
 import asyncio
 from typing import Generator
