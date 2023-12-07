@@ -4,8 +4,8 @@ from typing import Any, Dict
 from unittest import TestCase
 from parameterized import parameterized
 import requests
-from utils import access_nested_map, get_json
-from unittest.mock import Mock
+from utils import access_nested_map, get_json, memoize
+from unittest.mock import Mock, patch
 
 
 class TestAccessNestedMap(TestCase):
@@ -53,3 +53,22 @@ class TestAccessNestedMap(TestCase):
         result = get_json(test_url)
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+    def test_memoize(self):
+        """Test that function return value is memoized"""
+
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method') as mock_a_method:
+            mock_a_method.return_value = 30
+            foo = TestClass()
+            self.assertEqual(foo.a_property, 30)
+            self.assertEqual(foo.a_property, 30)
+
+        mock_a_method.assert_called_once()
