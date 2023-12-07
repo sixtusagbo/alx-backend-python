@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Parameterize a unit test"""
 from typing import Any, Dict
-from unittest import TestCase
+import unittest
 from parameterized import parameterized
 import requests
 from utils import access_nested_map, get_json, memoize
 from unittest.mock import Mock, patch
 
 
-class TestAccessNestedMap(TestCase):
+class TestAccessNestedMap(unittest.TestCase):
     """Access a nested map"""
 
     @parameterized.expand(
@@ -37,6 +37,10 @@ class TestAccessNestedMap(TestCase):
         message = str(cm.exception)
         self.assertEqual(message[1:-1], expected)
 
+
+class TestGetJson(unittest.TestCase):
+    """Mock HTTP calls"""
+
     @parameterized.expand(
         [
             ("http://example.com", {"payload": True}),
@@ -53,6 +57,10 @@ class TestAccessNestedMap(TestCase):
         result = get_json(test_url)
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """Test for memoization"""
 
     def test_memoize(self):
         """Test that function return value is memoized"""
