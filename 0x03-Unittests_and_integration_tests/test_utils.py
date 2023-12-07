@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Parameterize a unit test"""
+from typing import Any, Dict
 from unittest import TestCase
 from parameterized import parameterized
-from utils import access_nested_map
+from utils import access_nested_map, get_json
+from unittest.mock import patch
 
 
 class TestAccessNestedMap(TestCase):
@@ -33,3 +35,19 @@ class TestAccessNestedMap(TestCase):
 
         message = str(cm.exception)
         self.assertEqual(message[1:-1], expected)
+
+    @parameterized.expand(
+        [
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False}),
+        ]
+    )
+    @patch('utils.requests.get')
+    def test_get_json(
+        self, test_url: str, test_payload: Dict[str, Any], mock_get
+    ) -> None:
+        """Test that `utils.get_json` returns the expected result"""
+        mock_get.return_value.json.return_value = test_payload
+        result = get_json(test_url)
+        mock_get.assert_called_with(test_url)
+        self.assertEqual(result, test_payload)
