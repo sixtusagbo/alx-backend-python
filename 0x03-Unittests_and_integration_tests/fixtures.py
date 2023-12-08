@@ -74,7 +74,7 @@ TEST_PAYLOAD = [
         "updated_at": "2019-09-23T11:53:58Z",
         "pushed_at": "2014-10-09T21:39:33Z",
         "git_url": "git://github.com/google/episodes.dart.git",
-        "ssh_url": "git@github.com:google/episodes.dart.git",
+    "ssh_url": "git@github.com:google/episodes.dart.git",
         "clone_url": "https://github.com/google/episodes.dart.git",
         "svn_url": "https://github.com/google/episodes.dart",
         "homepage": None,
