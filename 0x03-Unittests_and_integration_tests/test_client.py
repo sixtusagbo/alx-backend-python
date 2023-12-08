@@ -56,3 +56,18 @@ class TestGithubOrgClient(unittest.TestCase):
             )
             client = GithubOrgClient('google')
             self.assertEqual(client.public_repos(), ["truth", "flutter"])
+
+    @parameterized.expand(
+        [
+            ({"license": {"key": "my_license"}}, "my_license", True),
+            ({"license": {"key": "other_license"}}, "my_license", False),
+        ]
+    )
+    def test_has_license(
+        self, repo: Dict[str, Dict], license_key: str, expected: bool
+    ) -> None:
+        """Test that `GithubOrgClient.has_license` returns
+        whether a repo has license or not
+        """
+        result = GithubOrgClient.has_license(repo, license_key)
+        self.assertEqual(result, expected)
