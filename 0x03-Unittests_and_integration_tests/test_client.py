@@ -42,3 +42,17 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(
                 client._public_repos_url, "https://example.com/google_repos"
             )
+
+    @patch('client.get_json')
+    def test_public_repos(self, mock_get_json: MagicMock):
+        """Test `GithubOrgClient.public_repos`"""
+        mock_get_json.return_value = [{"name": "truth"}, {"name": "flutter"}]
+        with patch(
+            "client.GithubOrgClient._public_repos_url",
+            new_callable=PropertyMock,
+        ) as mock_public_repos_url:
+            mock_public_repos_url.return_value = (
+                "https://example.com/google_repos"
+            )
+            client = GithubOrgClient('google')
+            self.assertEqual(client.public_repos(), ["truth", "flutter"])
