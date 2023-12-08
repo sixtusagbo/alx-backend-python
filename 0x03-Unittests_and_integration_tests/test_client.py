@@ -97,6 +97,16 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
         cls.mock_get.side_effect = get_side_effect
 
+    def test_public_repos(self):
+        """Test `GithubOrgClient.public_repos`"""
+        client = GithubOrgClient('google')
+        self.assertEqual(client.public_repos(), self.expected_repos)
+
+    def test_public_repos_with_license(self):
+        """Test `GithubOrgClient.public_repos` with a license argument"""
+        client = GithubOrgClient('google')
+        self.assertEqual(client.public_repos('apache-2.0'), self.apache2_repos)
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.get_patcher.stop()
